@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id          String   @id @default(cuid())
+  order       Int      @default(0)
+  available   Boolean  @default(true)
+  titlePl     String
+  titleUk     String
+  descriptionPl String
+  descriptionUk String
+  price       Float
+  priceUnitPl String   @default("dzień")
+  priceUnitUk String   @default("день")
+  photos      Photo[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  leads       Lead[]
+}
+
+model Photo {
+  id        String   @id @default(cuid())
+  url       String
+  order     Int      @default(0)
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  carId     String
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  type      String
+  name      String
+  phone     String
+  message   String?
+  car       Car?     @relation(fields: [carId], references: [id], onDelete: SetNull)
+  carId     String?
+  createdAt DateTime @default(now())
+  seen      Boolean  @default(false)
+}
+
+model PageContent {
+  id          String @id @default(cuid())
+  key         String @unique
+  titlePl     String
+  titleUk     String
+  bodyPl      String
+  bodyUk      String
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteSettings {
+  id          Int    @id @default(1)
+  phone       String @default("+48 000 000 000")
+  email       String @default("kontakt@x-partner.pl")
+  addressPl   String @default("Kraków, Polska")
+  addressUk   String @default("Краків, Польща")
+  adminPasswordHash String
+}
