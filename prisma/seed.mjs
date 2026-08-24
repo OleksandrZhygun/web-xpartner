@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 
 const prisma = new PrismaClient();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const UPLOAD_DIR = path.join(__dirname, "..", "public", "uploads");
+const UPLOAD_DIR = path.join(__dirname, "..", "data", "uploads");
 
 function carPlaceholderSvg(label, colorFrom, colorTo) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="533" viewBox="0 0 800 533">
@@ -30,7 +30,7 @@ async function seedPlaceholderPhoto(filename, label, colorFrom, colorTo) {
   await mkdir(UPLOAD_DIR, { recursive: true });
   const svg = carPlaceholderSvg(label, colorFrom, colorTo);
   await writeFile(path.join(UPLOAD_DIR, filename), svg, "utf-8");
-  return `/uploads/${filename}`;
+  return `/photos/${filename}`;
 }
 
 async function main() {

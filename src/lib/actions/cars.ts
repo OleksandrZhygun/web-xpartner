@@ -1,23 +1,10 @@
 "use server";
 
-import path from "path";
-import crypto from "crypto";
-import { mkdir, unlink, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-guard";
-
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
-
-async function saveUploadedPhoto(file: File): Promise<string> {
-  await mkdir(UPLOAD_DIR, { recursive: true });
-  const ext = path.extname(file.name) || ".jpg";
-  const filename = `${crypto.randomUUID()}${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(UPLOAD_DIR, filename), buffer);
-  return `/uploads/${filename}`;
-}
+import { saveUploadedPhoto, deletePhotoFile } from "@/lib/photo-storage";
 
 function str(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
@@ -107,7 +94,7 @@ export async function deleteCarAction(carId: string) {
   const car = await prisma.car.findUnique({ where: { id: carId }, include: { photos: true } });
   if (car) {
     for (const photo of car.photos) {
-      await unlink(path.join(process.cwd(), "public", photo.url)).catch(() => {});
+      await deletePhotoFile(photo.url);
     }
   }
   await prisma.car.delete({ where: { id: carId } });
@@ -121,7 +108,7 @@ export async function deletePhotoAction(photoId: string, carId: string) {
 
   const photo = await prisma.photo.findUnique({ where: { id: photoId } });
   if (photo) {
-    await unlink(path.join(process.cwd(), "public", photo.url)).catch(() => {});
+    await deletePhotoFile(photo.url);
     await prisma.photo.delete({ where: { id: photoId } });
   }
 
