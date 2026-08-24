@@ -13,6 +13,7 @@ export default function Header({ locale, dict }: { locale: Locale; dict: Diction
     { href: `/${locale}`, label: dict.nav.home },
     { href: `/${locale}/cars`, label: dict.nav.cars },
     { href: `/${locale}/jobs`, label: dict.nav.jobs },
+    { href: `/${locale}/testimonials`, label: dict.nav.testimonials },
     { href: `/${locale}/about`, label: dict.nav.about },
     { href: `/${locale}/contact`, label: dict.nav.contact },
   ];

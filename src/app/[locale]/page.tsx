@@ -16,11 +16,17 @@ export default async function HomePage({
   const locale: Locale = rawLocale;
   const dict = getDictionary(locale);
 
-  const cars = await prisma.car.findMany({
-    orderBy: [{ available: "desc" }, { order: "asc" }],
-    include: { photos: { orderBy: { order: "asc" }, take: 1 } },
-    take: 3,
-  });
+  const [cars, homeContent] = await Promise.all([
+    prisma.car.findMany({
+      orderBy: [{ available: "desc" }, { order: "asc" }],
+      include: { photos: { orderBy: { order: "asc" }, take: 1 } },
+      take: 3,
+    }),
+    prisma.pageContent.findUnique({ where: { key: "home" } }),
+  ]);
+
+  const heroTitle = (locale === "pl" ? homeContent?.titlePl : homeContent?.titleUk) || dict.hero.title;
+  const heroSubtitle = (locale === "pl" ? homeContent?.bodyPl : homeContent?.bodyUk) || dict.hero.subtitle;
 
   return (
     <div>
@@ -28,9 +34,9 @@ export default async function HomePage({
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <div className="max-w-2xl">
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
-              {dict.hero.title}
+              {heroTitle}
             </h1>
-            <p className="mt-5 text-lg text-white/80">{dict.hero.subtitle}</p>
+            <p className="mt-5 text-lg text-white/80">{heroSubtitle}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href={`/${locale}/cars`}

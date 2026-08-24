@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-guard";
+import { sendLeadNotification } from "@/lib/email";
 
 export type LeadType = "CAR" | "DRIVER" | "CONTACT";
 
@@ -25,15 +26,30 @@ export async function submitLeadAction(
     return { error: "toolong" };
   }
 
-  await prisma.lead.create({
-    data: {
+  const [, settings] = await Promise.all([
+    prisma.lead.create({
+      data: {
+        type,
+        carId: carId ?? undefined,
+        name,
+        phone,
+        message: message || undefined,
+      },
+    }),
+    prisma.siteSettings.findUnique({ where: { id: 1 } }),
+  ]);
+
+  if (settings?.email) {
+    const car = carId ? await prisma.car.findUnique({ where: { id: carId } }) : null;
+    await sendLeadNotification({
       type,
-      carId: carId ?? undefined,
       name,
       phone,
-      message: message || undefined,
-    },
-  });
+      message,
+      carTitle: car?.titlePl ?? null,
+      toEmail: settings.email,
+    });
+  }
 
   revalidatePath("/admin/leads");
   return { success: true };

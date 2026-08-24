@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 const PAGES = [
+  { key: "home", label: "Головна (заголовок і підзаголовок)" },
+  { key: "cars", label: "Авто в оренду (вступний текст)" },
+  { key: "jobs", label: "Робота водієм (заголовок і вступ)" },
   { key: "about", label: "Про нас / O nas" },
   { key: "privacy", label: "Політика конфіденційності / Polityka prywatności" },
   { key: "contact", label: "Контакти / Kontakt (вступний текст)" },

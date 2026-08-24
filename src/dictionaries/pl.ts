@@ -14,6 +14,7 @@ const pl = {
     about: "O nas",
     contact: "Kontakt",
     privacy: "Polityka prywatności",
+    testimonials: "Opinie kierowców",
   },
   hero: {
     title: "Zaczynasz jazdę w taxi lub aplikacjach przewozowych? Załatwimy Ci auto i pracę.",
@@ -103,6 +104,12 @@ const pl = {
     rights: "Wszelkie prawa zastrzeżone.",
     navTitle: "Nawigacja",
     contactTitle: "Kontakt",
+  },
+  testimonials: {
+    pageTitle: "Opinie kierowców",
+    intro:
+      "Co mówią kierowcy, którzy pracowali lub pracują z nami — wynajmowali auto albo znaleźli pracę dzięki X-Partner.",
+    emptyState: "Wkrótce pojawią się tu pierwsze opinie.",
   },
   pageKeys: {
     about: "about",

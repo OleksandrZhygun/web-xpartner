@@ -26,6 +26,9 @@ export default async function Footer({ locale, dict }: { locale: Locale; dict: D
             <Link href={`/${locale}/jobs`} className="hover:text-white">
               {dict.nav.jobs}
             </Link>
+            <Link href={`/${locale}/testimonials`} className="hover:text-white">
+              {dict.nav.testimonials}
+            </Link>
             <Link href={`/${locale}/about`} className="hover:text-white">
               {dict.nav.about}
             </Link>

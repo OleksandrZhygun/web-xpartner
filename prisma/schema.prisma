@@ -62,3 +62,15 @@ model SiteSettings {
   addressUk   String @default("Краків, Польща")
   adminPasswordHash String
 }
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  name      String
+  textPl    String
+  textUk    String
+  photoUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

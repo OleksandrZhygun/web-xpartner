@@ -24,8 +24,9 @@ export async function updatePageContentAction(
     create: { key, titlePl, titleUk, bodyPl, bodyUk },
   });
 
+  const publicSlug = key === "home" ? "" : `/${key}`;
   revalidatePath(`/admin/pages/${key}`);
-  revalidatePath(`/pl/${key}`);
-  revalidatePath(`/uk/${key}`);
+  revalidatePath(`/pl${publicSlug}`);
+  revalidatePath(`/uk${publicSlug}`);
   return { success: true };
 }

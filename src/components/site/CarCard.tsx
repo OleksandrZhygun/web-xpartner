@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries";
 import LeadForm from "@/components/site/LeadForm";
+import PhotoGallery from "@/components/site/PhotoGallery";
 import type { LeadFormState } from "@/lib/actions/leads";
 
 export type CarCardData = {
@@ -36,17 +37,11 @@ export default function CarCard({
   const title = locale === "pl" ? car.titlePl : car.titleUk;
   const description = locale === "pl" ? car.descriptionPl : car.descriptionUk;
   const unit = locale === "pl" ? car.priceUnitPl : car.priceUnitUk;
-  const photo = car.photos[0]?.url;
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-sm">
       <div className="relative aspect-[3/2] bg-slate-100">
-        {photo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt={title} className="h-full w-full object-cover" />
-        ) : (
-          <div className="flex h-full items-center justify-center text-sm text-slate-400">—</div>
-        )}
+        <PhotoGallery photos={car.photos} alt={title} />
         <span
           className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white ${
             car.available ? "bg-emerald-500" : "bg-slate-500"

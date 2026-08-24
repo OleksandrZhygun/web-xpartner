@@ -5,6 +5,9 @@ import { updatePageContentAction } from "@/lib/actions/pages";
 import PageContentForm from "@/components/admin/PageContentForm";
 
 const KNOWN_KEYS: Record<string, string> = {
+  home: "Головна (заголовок і підзаголовок)",
+  cars: "Авто в оренду (вступний текст)",
+  jobs: "Робота водієм (заголовок і вступ)",
   about: "Про нас / O nas",
   privacy: "Політика конфіденційності / Polityka prywatności",
   contact: "Контакти / Kontakt (вступний текст)",

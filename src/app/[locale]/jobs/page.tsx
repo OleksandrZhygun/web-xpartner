@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
+import { prisma } from "@/lib/prisma";
 import LeadForm from "@/components/site/LeadForm";
 import { submitLeadAction } from "@/lib/actions/leads";
 
@@ -14,10 +15,14 @@ export default async function JobsPage({
   const locale: Locale = rawLocale;
   const dict = getDictionary(locale);
 
+  const jobsContent = await prisma.pageContent.findUnique({ where: { key: "jobs" } });
+  const pageTitle = (locale === "pl" ? jobsContent?.titlePl : jobsContent?.titleUk) || dict.jobs.pageTitle;
+  const intro = (locale === "pl" ? jobsContent?.bodyPl : jobsContent?.bodyUk) || dict.jobs.intro;
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-brand-navy">{dict.jobs.pageTitle}</h1>
-      <p className="mt-4 max-w-2xl text-foreground/70">{dict.jobs.intro}</p>
+      <h1 className="text-3xl font-bold text-brand-navy">{pageTitle}</h1>
+      <p className="mt-4 max-w-2xl text-foreground/70">{intro}</p>
 
       <div className="mt-10 grid gap-8 md:grid-cols-2">
         <div>
