@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import { isLocale, locales, type Locale } from "@/lib/i18n";
+import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
@@ -10,9 +10,9 @@ import Footer from "@/components/site/Footer";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
+// Pages under [locale] read from the database on every request (cars, leads,
+// editable page content), so they must not be prerendered at build time.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
