@@ -10,7 +10,14 @@ const labelCls = "mb-1 block text-sm font-medium text-slate-700";
 export function SiteSettingsForm({
   defaults,
 }: {
-  defaults: { phone: string; email: string; addressPl: string; addressUk: string };
+  defaults: {
+    phone: string;
+    email: string;
+    addressPl: string;
+    addressUk: string;
+    instagramUrl: string;
+    tiktokUrl: string;
+  };
 }) {
   const [state, formAction, isPending] = useActionState<SettingsFormState, FormData>(updateSettingsAction, {});
 
@@ -42,6 +49,33 @@ export function SiteSettingsForm({
             Адреса (UA)
           </label>
           <input id="addressUk" name="addressUk" defaultValue={defaults.addressUk} className={inputCls} />
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className={labelCls} htmlFor="instagramUrl">
+            Instagram (посилання на профіль)
+          </label>
+          <input
+            id="instagramUrl"
+            name="instagramUrl"
+            placeholder="https://instagram.com/..."
+            defaultValue={defaults.instagramUrl}
+            className={inputCls}
+          />
+        </div>
+        <div>
+          <label className={labelCls} htmlFor="tiktokUrl">
+            TikTok (посилання на профіль)
+          </label>
+          <input
+            id="tiktokUrl"
+            name="tiktokUrl"
+            placeholder="https://tiktok.com/@..."
+            defaultValue={defaults.tiktokUrl}
+            className={inputCls}
+          />
         </div>
       </div>
 

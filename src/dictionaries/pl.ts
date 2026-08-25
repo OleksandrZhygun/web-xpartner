@@ -105,6 +105,11 @@ const pl = {
     navTitle: "Nawigacja",
     contactTitle: "Kontakt",
   },
+  office: {
+    title: "Nasze biuro",
+    copy: "Kopiuj adres",
+    copied: "Skopiowano!",
+  },
   testimonials: {
     pageTitle: "Opinie kierowców",
     intro:

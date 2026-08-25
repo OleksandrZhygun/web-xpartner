@@ -105,6 +105,11 @@ const uk = {
     navTitle: "Навігація",
     contactTitle: "Контакти",
   },
+  office: {
+    title: "Наш офіс",
+    copy: "Копіювати адресу",
+    copied: "Скопійовано!",
+  },
   testimonials: {
     pageTitle: "Відгуки водіїв",
     intro:

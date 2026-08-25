@@ -17,6 +17,8 @@ export async function updateSettingsAction(
   const email = String(formData.get("email") ?? "").trim();
   const addressPl = String(formData.get("addressPl") ?? "").trim();
   const addressUk = String(formData.get("addressUk") ?? "").trim();
+  const instagramUrl = String(formData.get("instagramUrl") ?? "").trim();
+  const tiktokUrl = String(formData.get("tiktokUrl") ?? "").trim();
 
   if (!phone || !email) {
     return { error: "Телефон та e-mail є обов'язковими." };
@@ -24,7 +26,14 @@ export async function updateSettingsAction(
 
   await prisma.siteSettings.update({
     where: { id: 1 },
-    data: { phone, email, addressPl, addressUk },
+    data: {
+      phone,
+      email,
+      addressPl,
+      addressUk,
+      instagramUrl: instagramUrl || null,
+      tiktokUrl: tiktokUrl || null,
+    },
   });
 
   revalidatePath("/", "layout");

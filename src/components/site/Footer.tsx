@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
+import SocialLinks from "@/components/site/SocialLinks";
 
 export default async function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
@@ -53,6 +54,12 @@ export default async function Footer({ locale, dict }: { locale: Locale; dict: D
             )}
             {address && <span>{address}</span>}
           </div>
+          <SocialLinks
+            instagramUrl={settings?.instagramUrl}
+            tiktokUrl={settings?.tiktokUrl}
+            variant="dark"
+            className="mt-4"
+          />
         </div>
       </div>
 

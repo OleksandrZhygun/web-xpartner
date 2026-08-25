@@ -60,6 +60,8 @@ model SiteSettings {
   email       String @default("kontakt@x-partner.pl")
   addressPl   String @default("Kraków, Polska")
   addressUk   String @default("Краків, Польща")
+  instagramUrl String?
+  tiktokUrl    String?
   adminPasswordHash String
 }
 
