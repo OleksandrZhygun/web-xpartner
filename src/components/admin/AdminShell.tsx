@@ -16,7 +16,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <aside className="hidden w-56 flex-none border-r border-slate-200 bg-white sm:block">
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="text-lg font-bold text-brand-navy">
-            X<span className="text-brand-amber">-</span>Partner
+            <span className="text-brand-amber">X-</span>Partner
           </div>
           <div className="text-xs text-slate-400">Адмін-панель</div>
         </div>
@@ -44,7 +44,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <div className="flex-1">
         <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 sm:hidden">
           <div className="text-lg font-bold text-brand-navy">
-            X<span className="text-brand-amber">-</span>Partner
+            <span className="text-brand-amber">X-</span>Partner
           </div>
           <form action={logoutAction}>
             <button type="submit" className="text-sm font-medium text-slate-500">

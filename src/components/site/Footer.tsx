@@ -13,7 +13,7 @@ export default async function Footer({ locale, dict }: { locale: Locale; dict: D
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
           <div className="text-lg font-bold text-white">
-            X<span className="text-brand-amber">-</span>Partner
+            <span className="text-brand-amber">X-</span>Partner
           </div>
           <p className="mt-2 max-w-xs text-sm leading-relaxed">{dict.common.tagline}</p>
         </div>

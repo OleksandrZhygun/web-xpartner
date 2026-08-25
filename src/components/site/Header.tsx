@@ -23,7 +23,7 @@ export default function Header({ locale, dict }: { locale: Locale; dict: Diction
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link href={`/${locale}`} className="flex items-baseline gap-2">
           <span className="text-xl font-bold tracking-tight">
-            X<span className="text-brand-amber">-</span>Partner
+            <span className="text-brand-amber">X-</span>Partner
           </span>
         </Link>
 
