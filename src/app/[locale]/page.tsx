@@ -6,7 +6,6 @@ import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
 import { pageMetadata, siteUrl } from "@/lib/seo";
 import CarCard from "@/components/site/CarCard";
-import { submitLeadAction } from "@/lib/actions/leads";
 
 const META = {
   pl: {
@@ -155,13 +154,7 @@ export default async function HomePage({
           </div>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => (
-              <CarCard
-                key={car.id}
-                car={car}
-                locale={locale}
-                dict={dict}
-                action={submitLeadAction.bind(null, "CAR", car.id)}
-              />
+              <CarCard key={car.id} car={car} locale={locale} dict={dict} />
             ))}
           </div>
         </section>

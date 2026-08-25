@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 import { pageMetadata } from "@/lib/seo";
 import CarCard from "@/components/site/CarCard";
 import Pagination from "@/components/site/Pagination";
-import { submitLeadAction } from "@/lib/actions/leads";
 
 const PAGE_SIZE = 9;
 
@@ -71,13 +70,7 @@ export default async function CarsPage({
         <>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => (
-              <CarCard
-                key={car.id}
-                car={car}
-                locale={locale}
-                dict={dict}
-                action={submitLeadAction.bind(null, "CAR", car.id)}
-              />
+              <CarCard key={car.id} car={car} locale={locale} dict={dict} />
             ))}
           </div>
           <Pagination basePath={`/${locale}/cars`} page={page} totalPages={totalPages} />

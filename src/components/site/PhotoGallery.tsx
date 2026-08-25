@@ -26,6 +26,7 @@ export default function PhotoGallery({ photos, alt }: { photos: { url: string }[
             type="button"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               go(-1);
             }}
             aria-label="Previous photo"
@@ -37,6 +38,7 @@ export default function PhotoGallery({ photos, alt }: { photos: { url: string }[
             type="button"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               go(1);
             }}
             aria-label="Next photo"
@@ -51,6 +53,7 @@ export default function PhotoGallery({ photos, alt }: { photos: { url: string }[
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
                   setIndex(i);
                 }}
                 aria-label={`Photo ${i + 1}`}
