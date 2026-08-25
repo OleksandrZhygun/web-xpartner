@@ -6,6 +6,7 @@ import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
 import { pageMetadata, siteUrl } from "@/lib/seo";
 import CarCard from "@/components/site/CarCard";
+import TaxiIllustration from "@/components/site/TaxiIllustration";
 
 const META = {
   pl: {
@@ -75,7 +76,7 @@ export default async function HomePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <section className="bg-gradient-to-b from-brand-navy to-brand-navy-light text-white">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2">
           <div className="max-w-2xl">
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
               {heroTitle}
@@ -95,6 +96,9 @@ export default async function HomePage({
                 {dict.hero.ctaJobs}
               </Link>
             </div>
+          </div>
+          <div className="hidden aspect-[5/4] w-full overflow-hidden rounded-3xl shadow-2xl lg:block">
+            <TaxiIllustration />
           </div>
         </div>
       </section>
