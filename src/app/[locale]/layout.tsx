@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
+import { siteUrl } from "@/lib/seo";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 
@@ -23,8 +24,12 @@ export async function generateMetadata({
   const loc: Locale = isLocale(locale) ? locale : "pl";
   const dict = getDictionary(loc);
   return {
-    title: `${dict.common.siteName} — ${dict.common.tagline}`,
-    description: loc === "pl" ? dict.hero.subtitle : dict.hero.subtitle,
+    metadataBase: new URL(siteUrl()),
+    title: {
+      template: `%s — ${dict.common.siteName}`,
+      default: `${dict.common.siteName} — ${dict.common.tagline}`,
+    },
+    description: dict.hero.subtitle,
   };
 }
 

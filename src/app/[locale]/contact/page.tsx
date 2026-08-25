@@ -1,9 +1,32 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
+import { pageMetadata } from "@/lib/seo";
 import LeadForm from "@/components/site/LeadForm";
 import { submitLeadAction } from "@/lib/actions/leads";
+
+const META = {
+  pl: {
+    title: "Kontakt",
+    description: "Skontaktuj się z X-Partner w Krakowie w sprawie wynajmu auta lub pracy jako kierowca.",
+  },
+  uk: {
+    title: "Контакти",
+    description: "Зв'яжіться з X-Partner у Кракові щодо оренди авто або роботи водієм.",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale: Locale = isLocale(rawLocale) ? rawLocale : "pl";
+  return pageMetadata({ locale, path: "/contact", ...META[locale] });
+}
 
 export default async function ContactPage({
   params,

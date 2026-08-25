@@ -1,12 +1,35 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
+import { pageMetadata } from "@/lib/seo";
 import CarCard from "@/components/site/CarCard";
 import Pagination from "@/components/site/Pagination";
 import { submitLeadAction } from "@/lib/actions/leads";
 
 const PAGE_SIZE = 9;
+
+const META = {
+  pl: {
+    title: "Wynajem aut do taxi i Uber w Krakowie — oferta",
+    description: "Auta gotowe do pracy w taxi, Uber, Bolt i FreeNow — sprawdź aktualną ofertę wynajmu w Krakowie.",
+  },
+  uk: {
+    title: "Оренда авто для таксі та Uber у Кракові — авто в наявності",
+    description: "Автомобілі, готові до роботи в таксі, Uber, Bolt та FreeNow — перегляньте поточний перелік оренди в Кракові.",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale: Locale = isLocale(rawLocale) ? rawLocale : "pl";
+  return pageMetadata({ locale, path: "/cars", ...META[locale] });
+}
 
 export default async function CarsPage({
   params,

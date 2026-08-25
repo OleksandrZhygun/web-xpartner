@@ -1,8 +1,25 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
+import { pageMetadata } from "@/lib/seo";
 import PageBody from "@/components/site/PageBody";
+
+const META = {
+  pl: { title: "Polityka prywatności", description: "Polityka prywatności serwisu x-partner.pl." },
+  uk: { title: "Політика конфіденційності", description: "Політика конфіденційності сайту x-partner.pl." },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale: Locale = isLocale(rawLocale) ? rawLocale : "pl";
+  return pageMetadata({ locale, path: "/privacy", ...META[locale] });
+}
 
 export default async function PrivacyPage({
   params,

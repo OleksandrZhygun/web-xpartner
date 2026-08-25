@@ -1,10 +1,35 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
+import { pageMetadata, siteUrl } from "@/lib/seo";
 import CarCard from "@/components/site/CarCard";
 import { submitLeadAction } from "@/lib/actions/leads";
+
+const META = {
+  pl: {
+    title: "Wynajem aut do taxi i Uber oraz praca dla kierowców w Krakowie",
+    description:
+      "Wynajmujemy samochody gotowe do rejestracji w taxi, Uber, Bolt i FreeNow oraz pomagamy znaleźć pracę jako kierowca w Krakowie. Obsługa po polsku i po ukraińsku.",
+  },
+  uk: {
+    title: "Оренда авто для таксі та Uber, робота водієм у Кракові",
+    description:
+      "Здаємо в оренду автомобілі, готові до реєстрації в таксі, Uber, Bolt та FreeNow, і допомагаємо знайти роботу водієм у Кракові. Обслуговування польською та українською.",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale: Locale = isLocale(rawLocale) ? rawLocale : "pl";
+  return pageMetadata({ locale, path: "", ...META[locale] });
+}
 
 export default async function HomePage({
   params,
@@ -16,20 +41,40 @@ export default async function HomePage({
   const locale: Locale = rawLocale;
   const dict = getDictionary(locale);
 
-  const [cars, homeContent] = await Promise.all([
+  const [cars, homeContent, settings] = await Promise.all([
     prisma.car.findMany({
       orderBy: [{ available: "desc" }, { order: "asc" }],
       include: { photos: { orderBy: { order: "asc" }, take: 1 } },
       take: 3,
     }),
     prisma.pageContent.findUnique({ where: { key: "home" } }),
+    prisma.siteSettings.findUnique({ where: { id: 1 } }),
   ]);
 
   const heroTitle = (locale === "pl" ? homeContent?.titlePl : homeContent?.titleUk) || dict.hero.title;
   const heroSubtitle = (locale === "pl" ? homeContent?.bodyPl : homeContent?.bodyUk) || dict.hero.subtitle;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "X-Partner",
+    url: `${siteUrl()}/${locale}`,
+    telephone: settings?.phone,
+    email: settings?.email,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Kraków",
+      addressCountry: "PL",
+    },
+    areaServed: "Kraków",
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="bg-gradient-to-b from-brand-navy to-brand-navy-light text-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <div className="max-w-2xl">
