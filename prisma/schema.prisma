@@ -63,6 +63,10 @@ model SiteSettings {
   instagramUrl String?
   tiktokUrl    String?
   facebookUrl  String?
+  katowicePhone String?
+  katowiceEmail String?
+  wroclawPhone  String?
+  wroclawEmail  String?
   adminPasswordHash String
 }
 

@@ -15,15 +15,19 @@ export function SiteSettingsForm({
     email: string;
     addressPl: string;
     addressUk: string;
-    instagramUrl: string;
     tiktokUrl: string;
     facebookUrl: string;
+    katowicePhone: string;
+    katowiceEmail: string;
+    wroclawPhone: string;
+    wroclawEmail: string;
   };
 }) {
   const [state, formAction, isPending] = useActionState<SettingsFormState, FormData>(updateSettingsAction, {});
 
   return (
     <form action={formAction} className="space-y-4">
+      <p className="text-sm font-semibold text-slate-700">Краків (головний офіс)</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className={labelCls} htmlFor="phone">
@@ -53,16 +57,49 @@ export function SiteSettingsForm({
         </div>
       </div>
 
+      <p className="pt-2 text-sm font-semibold text-slate-700">Катовіце</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className={labelCls} htmlFor="instagramUrl">
-            Instagram (посилання на профіль)
+          <label className={labelCls} htmlFor="katowicePhone">
+            Телефон
+          </label>
+          <input id="katowicePhone" name="katowicePhone" defaultValue={defaults.katowicePhone} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls} htmlFor="katowiceEmail">
+            E-mail
+          </label>
+          <input id="katowiceEmail" name="katowiceEmail" type="email" defaultValue={defaults.katowiceEmail} className={inputCls} />
+        </div>
+      </div>
+
+      <p className="pt-2 text-sm font-semibold text-slate-700">Вроцлав</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className={labelCls} htmlFor="wroclawPhone">
+            Телефон
+          </label>
+          <input id="wroclawPhone" name="wroclawPhone" defaultValue={defaults.wroclawPhone} className={inputCls} />
+        </div>
+        <div>
+          <label className={labelCls} htmlFor="wroclawEmail">
+            E-mail
+          </label>
+          <input id="wroclawEmail" name="wroclawEmail" type="email" defaultValue={defaults.wroclawEmail} className={inputCls} />
+        </div>
+      </div>
+
+      <p className="pt-2 text-sm font-semibold text-slate-700">Соцмережі</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className={labelCls} htmlFor="facebookUrl">
+            Facebook (посилання на сторінку)
           </label>
           <input
-            id="instagramUrl"
-            name="instagramUrl"
-            placeholder="https://instagram.com/..."
-            defaultValue={defaults.instagramUrl}
+            id="facebookUrl"
+            name="facebookUrl"
+            placeholder="https://facebook.com/..."
+            defaultValue={defaults.facebookUrl}
             className={inputCls}
           />
         </div>
@@ -78,19 +115,6 @@ export function SiteSettingsForm({
             className={inputCls}
           />
         </div>
-      </div>
-
-      <div>
-        <label className={labelCls} htmlFor="facebookUrl">
-          Facebook (посилання на сторінку)
-        </label>
-        <input
-          id="facebookUrl"
-          name="facebookUrl"
-          placeholder="https://facebook.com/..."
-          defaultValue={defaults.facebookUrl}
-          className={inputCls}
-        />
       </div>
 
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}

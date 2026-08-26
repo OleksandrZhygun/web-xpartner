@@ -20,9 +20,12 @@ export default async function AdminSettingsPage() {
               email: settings?.email ?? "",
               addressPl: settings?.addressPl ?? "",
               addressUk: settings?.addressUk ?? "",
-              instagramUrl: settings?.instagramUrl ?? "",
               tiktokUrl: settings?.tiktokUrl ?? "",
               facebookUrl: settings?.facebookUrl ?? "",
+              katowicePhone: settings?.katowicePhone ?? "",
+              katowiceEmail: settings?.katowiceEmail ?? "",
+              wroclawPhone: settings?.wroclawPhone ?? "",
+              wroclawEmail: settings?.wroclawEmail ?? "",
             }}
           />
         </div>

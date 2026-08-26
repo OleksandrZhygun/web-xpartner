@@ -83,6 +83,11 @@ const pl = {
     intro: "Masz pytanie o wynajem auta lub pracę jako kierowca? Napisz lub zadzwoń — odpowiadamy w dni robocze.",
     formTitle: "Napisz do nas",
     detailsTitle: "Dane kontaktowe",
+    cities: {
+      krakow: "Kraków",
+      katowice: "Katowice",
+      wroclaw: "Wrocław",
+    },
   },
   form: {
     nameLabel: "Imię i nazwisko",

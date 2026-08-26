@@ -56,7 +56,6 @@ export default async function Footer({ locale, dict }: { locale: Locale; dict: D
           </div>
           <SocialLinks
             facebookUrl={settings?.facebookUrl}
-            instagramUrl={settings?.instagramUrl}
             tiktokUrl={settings?.tiktokUrl}
             variant="dark"
             className="mt-4"

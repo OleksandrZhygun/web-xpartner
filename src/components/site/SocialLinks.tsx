@@ -1,17 +1,15 @@
 export default function SocialLinks({
   facebookUrl,
-  instagramUrl,
   tiktokUrl,
   variant = "light",
   className,
 }: {
   facebookUrl?: string | null;
-  instagramUrl?: string | null;
   tiktokUrl?: string | null;
   variant?: "light" | "dark";
   className?: string;
 }) {
-  if (!facebookUrl && !instagramUrl && !tiktokUrl) return null;
+  if (!facebookUrl && !tiktokUrl) return null;
 
   const iconCls =
     variant === "dark"
@@ -24,15 +22,6 @@ export default function SocialLinks({
         <a href={facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={iconCls}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M14 8.5h2.5V5.4C16.1 5.28 14.9 5 13.5 5c-2.8 0-4.7 1.76-4.7 5v2.5H6v3.4h2.8V21h3.5v-5.1H15l.5-3.4h-3.2v-2.1c0-1 .27-1.9 1.7-1.9Z" />
-          </svg>
-        </a>
-      )}
-      {instagramUrl && (
-        <a href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={iconCls}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="2" y="2" width="20" height="20" rx="5" />
-            <circle cx="12" cy="12" r="4.5" />
-            <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none" />
           </svg>
         </a>
       )}

@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
 import { pageMetadata } from "@/lib/seo";
 import LeadForm from "@/components/site/LeadForm";
+import WhatsAppLink from "@/components/site/WhatsAppLink";
 import { submitLeadAction } from "@/lib/actions/leads";
 
 const META = {
@@ -47,51 +48,83 @@ export default async function ContactPage({
   const intro = page ? (locale === "pl" ? page.bodyPl : page.bodyUk) : dict.contact.intro;
   const address = locale === "pl" ? settings?.addressPl : settings?.addressUk;
 
+  const offices = [
+    {
+      city: dict.contact.cities.krakow,
+      phone: settings?.phone,
+      email: settings?.email,
+      whatsapp: true,
+    },
+    {
+      city: dict.contact.cities.katowice,
+      phone: settings?.katowicePhone,
+      email: settings?.katowiceEmail,
+      whatsapp: false,
+    },
+    {
+      city: dict.contact.cities.wroclaw,
+      phone: settings?.wroclawPhone,
+      email: settings?.wroclawEmail,
+      whatsapp: false,
+    },
+  ].filter((office) => office.phone || office.email);
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
       <h1 className="text-3xl font-bold text-brand-navy">{title}</h1>
       <p className="mt-4 max-w-2xl text-foreground/70">{intro}</p>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-2">
-        <div className="rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-brand-navy">{dict.contact.formTitle}</h2>
-          <div className="mt-4">
-            <LeadForm action={submitLeadAction.bind(null, "CONTACT", null)} dict={dict} />
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-lg font-semibold text-brand-navy">{dict.contact.detailsTitle}</h2>
-          <dl className="mt-4 space-y-4 text-sm">
-            {settings?.phone && (
-              <div>
-                <dt className="text-foreground/50">{dict.common.phoneLabel}</dt>
-                <dd className="mt-0.5">
-                  <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-medium text-brand-navy hover:underline">
-                    {settings.phone}
-                  </a>
-                </dd>
-              </div>
-            )}
-            {settings?.email && (
-              <div>
-                <dt className="text-foreground/50">{dict.common.emailLabel}</dt>
-                <dd className="mt-0.5">
-                  <a href={`mailto:${settings.email}`} className="font-medium text-brand-navy hover:underline">
-                    {settings.email}
-                  </a>
-                </dd>
-              </div>
-            )}
-            {address && (
-              <div>
-                <dt className="text-foreground/50">{dict.common.addressLabel}</dt>
-                <dd className="mt-0.5 font-medium text-brand-navy">{address}</dd>
-              </div>
-            )}
-          </dl>
+      <div className="mt-10 rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm">
+        <h2 className="text-lg font-semibold text-brand-navy">{dict.contact.formTitle}</h2>
+        <div className="mt-4 max-w-xl">
+          <LeadForm action={submitLeadAction.bind(null, "CONTACT", null)} dict={dict} />
         </div>
       </div>
+
+      {offices.length > 0 && (
+        <div className="mt-10">
+          <h2 className="text-lg font-semibold text-brand-navy">{dict.contact.detailsTitle}</h2>
+          <div className="mt-4 grid gap-6 sm:grid-cols-3">
+            {offices.map((office) => (
+              <div key={office.city} className="rounded-2xl border border-border-subtle bg-surface p-5">
+                <div className="font-semibold text-brand-navy">{office.city}</div>
+                <dl className="mt-3 space-y-3 text-sm">
+                  {office.phone && (
+                    <div>
+                      <dt className="text-foreground/50">{dict.common.phoneLabel}</dt>
+                      <dd className="mt-0.5 flex items-center gap-2">
+                        <a
+                          href={`tel:${office.phone.replace(/\s+/g, "")}`}
+                          className="font-medium text-brand-navy hover:underline"
+                        >
+                          {office.phone}
+                        </a>
+                        {office.whatsapp && <WhatsAppLink phone={office.phone} />}
+                      </dd>
+                    </div>
+                  )}
+                  {office.email && (
+                    <div>
+                      <dt className="text-foreground/50">{dict.common.emailLabel}</dt>
+                      <dd className="mt-0.5">
+                        <a href={`mailto:${office.email}`} className="font-medium text-brand-navy hover:underline">
+                          {office.email}
+                        </a>
+                      </dd>
+                    </div>
+                  )}
+                  {office.city === dict.contact.cities.krakow && address && (
+                    <div>
+                      <dt className="text-foreground/50">{dict.common.addressLabel}</dt>
+                      <dd className="mt-0.5 font-medium text-brand-navy">{address}</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

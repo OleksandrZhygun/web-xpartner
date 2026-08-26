@@ -54,12 +54,7 @@ export default async function AboutPage({
         <PageBody text={body} />
       </div>
 
-      <SocialLinks
-        facebookUrl={settings?.facebookUrl}
-        instagramUrl={settings?.instagramUrl}
-        tiktokUrl={settings?.tiktokUrl}
-        className="mt-6"
-      />
+      <SocialLinks facebookUrl={settings?.facebookUrl} tiktokUrl={settings?.tiktokUrl} className="mt-6" />
 
       {address && (
         <div className="mt-10 max-w-2xl">

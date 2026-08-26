@@ -17,9 +17,12 @@ export async function updateSettingsAction(
   const email = String(formData.get("email") ?? "").trim();
   const addressPl = String(formData.get("addressPl") ?? "").trim();
   const addressUk = String(formData.get("addressUk") ?? "").trim();
-  const instagramUrl = String(formData.get("instagramUrl") ?? "").trim();
   const tiktokUrl = String(formData.get("tiktokUrl") ?? "").trim();
   const facebookUrl = String(formData.get("facebookUrl") ?? "").trim();
+  const katowicePhone = String(formData.get("katowicePhone") ?? "").trim();
+  const katowiceEmail = String(formData.get("katowiceEmail") ?? "").trim();
+  const wroclawPhone = String(formData.get("wroclawPhone") ?? "").trim();
+  const wroclawEmail = String(formData.get("wroclawEmail") ?? "").trim();
 
   if (!phone || !email) {
     return { error: "Телефон та e-mail є обов'язковими." };
@@ -32,9 +35,12 @@ export async function updateSettingsAction(
       email,
       addressPl,
       addressUk,
-      instagramUrl: instagramUrl || null,
       tiktokUrl: tiktokUrl || null,
       facebookUrl: facebookUrl || null,
+      katowicePhone: katowicePhone || null,
+      katowiceEmail: katowiceEmail || null,
+      wroclawPhone: wroclawPhone || null,
+      wroclawEmail: wroclawEmail || null,
     },
   });
 
