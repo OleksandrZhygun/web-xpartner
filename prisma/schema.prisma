@@ -62,6 +62,7 @@ model SiteSettings {
   addressUk   String @default("Краків, Польща")
   instagramUrl String?
   tiktokUrl    String?
+  facebookUrl  String?
   adminPasswordHash String
 }
 

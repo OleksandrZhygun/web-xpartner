@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { pageMetadata } from "@/lib/seo";
 import CarCard from "@/components/site/CarCard";
 import Pagination from "@/components/site/Pagination";
+import FaqSection from "@/components/site/FaqSection";
 
 const PAGE_SIZE = 9;
 
@@ -76,6 +77,8 @@ export default async function CarsPage({
           <Pagination basePath={`/${locale}/cars`} page={page} totalPages={totalPages} />
         </>
       )}
+
+      <FaqSection title={dict.faq.sectionTitle} items={dict.faq.cars} />
     </div>
   );
 }

@@ -19,6 +19,7 @@ export async function updateSettingsAction(
   const addressUk = String(formData.get("addressUk") ?? "").trim();
   const instagramUrl = String(formData.get("instagramUrl") ?? "").trim();
   const tiktokUrl = String(formData.get("tiktokUrl") ?? "").trim();
+  const facebookUrl = String(formData.get("facebookUrl") ?? "").trim();
 
   if (!phone || !email) {
     return { error: "Телефон та e-mail є обов'язковими." };
@@ -33,6 +34,7 @@ export async function updateSettingsAction(
       addressUk,
       instagramUrl: instagramUrl || null,
       tiktokUrl: tiktokUrl || null,
+      facebookUrl: facebookUrl || null,
     },
   });
 

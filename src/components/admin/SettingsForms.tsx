@@ -17,6 +17,7 @@ export function SiteSettingsForm({
     addressUk: string;
     instagramUrl: string;
     tiktokUrl: string;
+    facebookUrl: string;
   };
 }) {
   const [state, formAction, isPending] = useActionState<SettingsFormState, FormData>(updateSettingsAction, {});
@@ -77,6 +78,19 @@ export function SiteSettingsForm({
             className={inputCls}
           />
         </div>
+      </div>
+
+      <div>
+        <label className={labelCls} htmlFor="facebookUrl">
+          Facebook (посилання на сторінку)
+        </label>
+        <input
+          id="facebookUrl"
+          name="facebookUrl"
+          placeholder="https://facebook.com/..."
+          defaultValue={defaults.facebookUrl}
+          className={inputCls}
+        />
       </div>
 
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}

@@ -22,6 +22,7 @@ export default async function AdminSettingsPage() {
               addressUk: settings?.addressUk ?? "",
               instagramUrl: settings?.instagramUrl ?? "",
               tiktokUrl: settings?.tiktokUrl ?? "",
+              facebookUrl: settings?.facebookUrl ?? "",
             }}
           />
         </div>

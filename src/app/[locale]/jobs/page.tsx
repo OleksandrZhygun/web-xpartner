@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/dictionaries";
 import { prisma } from "@/lib/prisma";
 import { pageMetadata } from "@/lib/seo";
 import LeadForm from "@/components/site/LeadForm";
+import FaqSection from "@/components/site/FaqSection";
 import { submitLeadAction } from "@/lib/actions/leads";
 
 const META = {
@@ -72,6 +73,8 @@ export default async function JobsPage({
           </div>
         </div>
       </div>
+
+      <FaqSection title={dict.faq.sectionTitle} items={dict.faq.jobs} />
     </div>
   );
 }

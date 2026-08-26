@@ -105,6 +105,53 @@ const pl = {
     navTitle: "Nawigacja",
     contactTitle: "Kontakt",
   },
+  faq: {
+    sectionTitle: "Najczęstsze pytania",
+    cars: [
+      {
+        q: "Czy muszę mieć własne auto, żeby jeździć w Uberze lub Bolcie?",
+        a: "Nie — możesz wynająć u nas samochód gotowy do rejestracji w aplikacjach przewozowych, bez własnego auta.",
+      },
+      {
+        q: "Ile kosztuje wynajem auta do taxi w Krakowie?",
+        a: "Cena zależy od modelu — aktualne stawki znajdziesz przy każdym aucie na liście powyżej, zwykle rozliczamy się za dzień.",
+      },
+      {
+        q: "Czy auto ma ważny przegląd techniczny i ubezpieczenie?",
+        a: "Tak, każdy samochód w naszej ofercie ma aktualny przegląd techniczny oraz ubezpieczenie OC/AC.",
+      },
+      {
+        q: "Czy mogę wynająć auto na krótki okres, np. na tydzień?",
+        a: "Tak, oferujemy zarówno wynajem krótkoterminowy, jak i długoterminowy — dopasowany do Twojego grafiku pracy.",
+      },
+      {
+        q: "Czy auto nadaje się jednocześnie do Ubera, Bolta i FreeNow?",
+        a: "Tak, nasze samochody spełniają wymogi rejestracyjne wszystkich głównych aplikacji przewozowych działających w Krakowie.",
+      },
+    ],
+    jobs: [
+      {
+        q: "Jak zostać kierowcą taxi lub Ubera w Krakowie?",
+        a: "Zostaw zgłoszenie w formularzu poniżej — skontaktujemy się i pomożemy dobrać ofertę pracy, a w razie potrzeby też auto do jazdy.",
+      },
+      {
+        q: "Czy muszę mieć duże doświadczenie za kierownicą?",
+        a: "Wymogi zależą od konkretnej firmy przewozowej lub korporacji taxi — omówimy to indywidualnie po otrzymaniu zgłoszenia.",
+      },
+      {
+        q: "Czy pomagacie też w wynajmie auta dla kierowców bez własnego samochodu?",
+        a: "Tak, wielu naszych kierowców korzysta jednocześnie z wynajmu auta u nas — to wygodne połączenie pracy i transportu.",
+      },
+      {
+        q: "Czy obsługa jest dostępna po ukraińsku?",
+        a: "Tak, cała komunikacja jest możliwa zarówno po polsku, jak i po ukraińsku.",
+      },
+      {
+        q: "Jakie dokumenty są potrzebne do pracy jako kierowca taxi?",
+        a: "Pomożemy skompletować wymagane dokumenty — szczegóły ustalimy indywidualnie po otrzymaniu Twojego zgłoszenia.",
+      },
+    ],
+  },
   office: {
     title: "Nasze biuro",
     copy: "Kopiuj adres",
