@@ -33,6 +33,69 @@ async function seedPlaceholderPhoto(filename, label, colorFrom, colorTo) {
   return `/photos/${filename}`;
 }
 
+// Simple illustrated placeholder (front/side/rear) used until real photos are
+// uploaded via the admin panel — never a substitute for an actual photo.
+function carAngleSvg(angle, label, angleLabel, colorFrom, colorTo) {
+  const shapes = {
+    side: `<g transform="translate(120,230)" fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" opacity="0.92">
+      <path d="M20 90 L60 20 L200 10 L280 40 L520 40 L560 90 L560 130 L20 130 Z"/>
+      <circle cx="100" cy="130" r="34" fill="#0f172a" stroke="#ffffff"/>
+      <circle cx="460" cy="130" r="34" fill="#0f172a" stroke="#ffffff"/>
+    </g>`,
+    front: `<g transform="translate(240,190)" fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" opacity="0.92">
+      <path d="M20 170 L20 90 C20 50 60 20 130 20 C200 20 240 50 240 90 L240 170 Z"/>
+      <path d="M50 60 L210 60" opacity="0.6"/>
+      <rect x="60" y="90" width="140" height="30" rx="6" opacity="0.5"/>
+      <circle cx="45" cy="140" r="16" fill="#f59e0b" stroke="none"/>
+      <circle cx="215" cy="140" r="16" fill="#f59e0b" stroke="none"/>
+      <line x1="10" y1="170" x2="250" y2="170"/>
+    </g>`,
+    rear: `<g transform="translate(240,190)" fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" opacity="0.92">
+      <path d="M20 170 L20 90 C20 50 60 20 130 20 C200 20 240 50 240 90 L240 170 Z"/>
+      <path d="M50 60 L210 60" opacity="0.6"/>
+      <rect x="30" y="120" width="45" height="20" rx="5" fill="#f59e0b" stroke="none"/>
+      <rect x="185" y="120" width="45" height="20" rx="5" fill="#f59e0b" stroke="none"/>
+      <line x1="10" y1="170" x2="250" y2="170"/>
+    </g>`,
+  };
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="533" viewBox="0 0 800 533">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="${colorFrom}"/>
+      <stop offset="1" stop-color="${colorTo}"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="533" fill="url(#g)"/>
+  ${shapes[angle]}
+  <text x="400" y="470" font-family="Arial, sans-serif" font-size="30" fill="#ffffff" text-anchor="middle" opacity="0.9">${label}</text>
+  <text x="400" y="505" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" text-anchor="middle" opacity="0.6">${angleLabel} — zdjęcie tymczasowe</text>
+</svg>`;
+}
+
+async function seedAnglePhotos(baseFilename, label, colorFrom, colorTo) {
+  const angles = [
+    { key: "front", label: "Przód" },
+    { key: "side", label: "Bok" },
+    { key: "rear", label: "Tył" },
+  ];
+  const urls = [];
+  for (const { key, label: angleLabel } of angles) {
+    const filename = `${baseFilename}-${key}.svg`;
+    const svg = carAngleSvg(key, label, angleLabel, colorFrom, colorTo);
+    await mkdir(UPLOAD_DIR, { recursive: true });
+    await writeFile(path.join(UPLOAD_DIR, filename), svg, "utf-8");
+    urls.push(`/photos/${filename}`);
+  }
+  return urls;
+}
+
+async function ensureCar(titlePl, data) {
+  const existing = await prisma.car.findFirst({ where: { titlePl } });
+  if (existing) return;
+  await prisma.car.create({ data: { titlePl, ...data } });
+}
+
 async function main() {
   const adminPassword = process.env.ADMIN_PASSWORD || "change-me-please";
   const adminPasswordHash = await bcrypt.hash(adminPassword, 10);
@@ -199,6 +262,51 @@ Niniejsza polityka może być aktualizowana. Aktualna wersja jest zawsze dostęp
       },
     });
   }
+
+  const priusPlusPhotos = await seedAnglePhotos("toyota-prius-plus-2017", "Toyota Prius+ 1.8 Hybrid", "#111827", "#1f2937");
+  await ensureCar("Toyota Prius+ 1.8 Hybrid + LPG (2017)", {
+    order: 4,
+    available: true,
+    titleUk: "Toyota Prius+ 1.8 Hybrid + LPG (2017)",
+    descriptionPl:
+      "Czarna Toyota Prius+ z 2017 roku, silnik 1.8 hybrydowy dodatkowo zasilany LPG — bardzo niskie koszty paliwa. Przestronne wnętrze, dobra opcja do pracy w taxi lub aplikacjach przewozowych, także z większym bagażem.",
+    descriptionUk:
+      "Чорна Toyota Prius+ 2017 року, гібридний двигун 1.8 з додатковою газовою установкою LPG — дуже низькі витрати на паливо. Просторий салон, гарний варіант для роботи в таксі чи додатках перевезень, зокрема з великим багажем.",
+    price: 800,
+    priceUnitPl: "dzień",
+    priceUnitUk: "день",
+    photos: { create: priusPlusPhotos.map((url, order) => ({ url, order })) },
+  });
+
+  const prius2011Photos = await seedAnglePhotos("toyota-prius-2011", "Toyota Prius 1.8 Hybrid", "#334155", "#475569");
+  await ensureCar("Toyota Prius 1.8 Hybrid + LPG (2011)", {
+    order: 5,
+    available: true,
+    titleUk: "Toyota Prius 1.8 Hybrid + LPG (2011)",
+    descriptionPl:
+      "Toyota Prius z 2011 roku, silnik 1.8 hybrydowy z instalacją LPG. Sprawdzony, ekonomiczny wybór do pracy w taxi i aplikacjach przewozowych — jeden z najczęściej wybieranych modeli przez kierowców.",
+    descriptionUk:
+      "Toyota Prius, 2011 рік, гібридний двигун 1.8 з газовою установкою LPG. Перевірений, економічний варіант для роботи в таксі та додатках перевезень — одна з найпопулярніших моделей серед водіїв.",
+    price: 550,
+    priceUnitPl: "dzień",
+    priceUnitUk: "день",
+    photos: { create: prius2011Photos.map((url, order) => ({ url, order })) },
+  });
+
+  const aurisPhotos = await seedAnglePhotos("toyota-auris-hybrid", "Toyota Auris 1.8 Hybrid", "#111827", "#1f2937");
+  await ensureCar("Toyota Auris 1.8 Hybrid", {
+    order: 6,
+    available: true,
+    titleUk: "Toyota Auris 1.8 Hybrid",
+    descriptionPl:
+      "Czarna Toyota Auris z hybrydowym silnikiem 1.8. Kompaktowa, zwrotna i ekonomiczna — dobrze sprawdza się w codziennej pracy w mieście.",
+    descriptionUk:
+      "Чорна Toyota Auris з гібридним двигуном 1.8. Компактна, маневрена й економічна — добре підходить для щоденної роботи в місті.",
+    price: 600,
+    priceUnitPl: "dzień",
+    priceUnitUk: "день",
+    photos: { create: aurisPhotos.map((url, order) => ({ url, order })) },
+  });
 
   console.log("Seed complete.");
 }

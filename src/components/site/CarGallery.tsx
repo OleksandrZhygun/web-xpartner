@@ -2,10 +2,20 @@
 
 import { useState } from "react";
 import Lightbox from "@/components/site/Lightbox";
+import { useSwipe } from "@/lib/useSwipe";
 
 export default function CarGallery({ photos, alt }: { photos: { url: string }[]; alt: string }) {
   const [index, setIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  const go = (delta: number) => {
+    setIndex((i) => (i + delta + photos.length) % photos.length);
+  };
+
+  const swipeHandlers = useSwipe(
+    () => go(1),
+    () => go(-1)
+  );
 
   if (photos.length === 0) {
     return (
@@ -15,17 +25,13 @@ export default function CarGallery({ photos, alt }: { photos: { url: string }[];
     );
   }
 
-  const go = (delta: number) => {
-    setIndex((i) => (i + delta + photos.length) % photos.length);
-  };
-
   return (
     <div>
-      <div className="group relative aspect-[3/2] overflow-hidden rounded-2xl bg-slate-100">
+      <div className="group relative aspect-[3/2] overflow-hidden rounded-2xl bg-slate-100" {...swipeHandlers}>
         <button
           type="button"
           onClick={() => setLightboxOpen(true)}
-          className="block h-full w-full cursor-zoom-in"
+          className="block h-full w-full cursor-zoom-in touch-pan-y"
           aria-label="Enlarge photo"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useSwipe } from "@/lib/useSwipe";
 
 export default function Lightbox({
   photos,
@@ -29,10 +30,16 @@ export default function Lightbox({
     };
   }, [index, photos.length, onIndexChange, onClose]);
 
+  const swipeHandlers = useSwipe(
+    () => onIndexChange((index + 1) % photos.length),
+    () => onIndexChange((index - 1 + photos.length) % photos.length)
+  );
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
       onClick={onClose}
+      {...swipeHandlers}
     >
       <button
         type="button"

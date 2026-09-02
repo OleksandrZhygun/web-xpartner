@@ -1,9 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useSwipe } from "@/lib/useSwipe";
 
 export default function PhotoGallery({ photos, alt }: { photos: { url: string }[]; alt: string }) {
   const [index, setIndex] = useState(0);
+
+  const go = (delta: number) => {
+    setIndex((i) => (i + delta + photos.length) % photos.length);
+  };
+
+  const swipeHandlers = useSwipe(
+    () => go(1),
+    () => go(-1)
+  );
 
   if (photos.length === 0) {
     return (
@@ -11,14 +21,10 @@ export default function PhotoGallery({ photos, alt }: { photos: { url: string }[
     );
   }
 
-  const go = (delta: number) => {
-    setIndex((i) => (i + delta + photos.length) % photos.length);
-  };
-
   return (
-    <div className="group relative h-full w-full">
+    <div className="group relative h-full w-full" {...swipeHandlers}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={photos[index].url} alt={alt} className="h-full w-full object-cover" />
+      <img src={photos[index].url} alt={alt} className="h-full w-full touch-pan-y object-cover" />
 
       {photos.length > 1 && (
         <>
