@@ -70,6 +70,17 @@ model SiteSettings {
   adminPasswordHash String
 }
 
+model PageVisit {
+  id        String   @id @default(cuid())
+  path      String
+  ip        String
+  source    String
+  referrer  String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
 model Testimonial {
   id        String   @id @default(cuid())
   order     Int      @default(0)

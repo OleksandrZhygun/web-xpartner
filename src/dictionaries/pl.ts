@@ -157,6 +157,12 @@ const pl = {
       },
     ],
   },
+  cookies: {
+    message: "Używamy niezbędnych plików cookie, aby strona działała poprawnie.",
+    policyLinkText: "Polityka prywatności",
+    accept: "Akceptuję",
+    reject: "Odrzuć",
+  },
   office: {
     title: "Nasze biuro",
     copy: "Kopiuj adres",

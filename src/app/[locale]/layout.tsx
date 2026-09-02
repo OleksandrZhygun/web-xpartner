@@ -7,6 +7,7 @@ import { getDictionary } from "@/lib/dictionaries";
 import { siteUrl } from "@/lib/seo";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
+import CookieConsent from "@/components/site/CookieConsent";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
         <Header locale={locale} dict={dict} />
         <main className="flex-1">{children}</main>
         <Footer locale={locale} dict={dict} />
+        <CookieConsent locale={locale} dict={dict} />
       </body>
     </html>
   );
